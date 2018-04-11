@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+    background-color: #555;
+}
+canvas {
+    background-color: #fff;
+}
+h1 {
+    font-family: VT323;
+    font-size: 40px;
+}
