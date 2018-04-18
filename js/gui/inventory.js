@@ -31,7 +31,7 @@ Inventory.prototype.onClick = function(e){
     let output = [-1,-1];
     for (let i in this.slots.input){
         if (e.x>=this.slots.input[i].x && e.x<=this.slots.input[i].x+8 && e.y>=this.slots.input[i].y && e.y<=this.slots.input[i].y+8){
-            console.log("Clicked on input slot "+i);
+            //console.log("Clicked on input slot "+i);
             if (!this.locked){
                 let tmp = screen.hand;
                 screen.hand = this.input[i];
@@ -42,7 +42,7 @@ Inventory.prototype.onClick = function(e){
     }
     for (let i in this.slots.output){
         if (e.x>=this.slots.output[i].x && e.x<=this.slots.output[i].x+8 && e.y>=this.slots.output[i].y && e.y<=this.slots.output[i].y+8){
-            console.log("Clicked on output slot "+i);
+            //console.log("Clicked on output slot "+i);
             if (!this.locked && !screen.hand){
                 screen.hand = this.output[i];
                 this.output[i] = undefined;

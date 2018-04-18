@@ -1,17 +1,19 @@
-function StaticButton(_x,_y,_scale,_item,_texture,_func){
+function StaticButton(_x,_y,_scale,_item,_texture,_func,_disable){
     this.scale = _scale;
     this.width = _texture.width*this.scale;
     this.height = _texture.height*this.scale;
     this.pos = {x: _x,y: _y};
     this.texture = _texture;
-    this.func = _func;
-    this.itemType = _item[0];
+    this.texture.display = _disable?false:this.texture.display;
+    this.func = _disable?"":_func;
+    this.itemType = _disable?undefined:_item[0];
     this.active = false;
     switch(_item[0]){
         case 0: this.item = undefined; break;
         case 1: this.item = new ItemStack(new Item(_item[1]),_item[2]); break;
         case 2: this.item = new ItemStack(new StaticButton.machines[_item[1]]({x:0,y:0},StaticButton.dummyGauge),_item[2]); break;
     }
+    this.item = _disable?undefined:this.item;
 }
 StaticButton.dummyGauge = {max: 500, val: 500, reserved: 0};
 StaticButton.machines = [
@@ -40,6 +42,5 @@ StaticButton.prototype.display = function(){
 }
 StaticButton.prototype.update = function(){}
 StaticButton.prototype.onClick = function(e){
-    console.log("Clicked");
     eval(this.func);
 }

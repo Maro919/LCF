@@ -15,6 +15,6 @@ Machine.prototype.update = function () {
 Machine.prototype.CraftingList = {};
 
 Machine.prototype.onClick = function(e){
-    console.log("Clicked on Machine!",e);
+    //console.log("Clicked on Machine!",e);
     return this.inventory.onClick(e);
 }

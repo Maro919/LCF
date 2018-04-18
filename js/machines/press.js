@@ -19,7 +19,7 @@ Press.prototype.CraftingList={
 Press.prototype.update = function () {
     if(!this.proccesing && (this.steam.val-this.steam.reserved)>=100 && !this.inventory.isBlocked()){
         if(this.CraftingList[this.inventory.getRecipe()]){
-            console.log("test");
+            //console.log("test");
             this.last=this.CraftingList[this.inventory.getRecipe()];
             this.inventory.input = [];
             this.progress.val=this.progress.max;

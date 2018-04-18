@@ -23,7 +23,7 @@ Assembler.prototype.CraftingList={
 Assembler.prototype.update = function () {
     if(!this.proccesing && (this.flux.val-this.flux.reserved)>=100 && !this.inventory.isBlocked()){
         if(this.CraftingList[this.inventory.getRecipe()]){
-            console.log("test");
+            //console.log("test");
             this.last=this.CraftingList[this.inventory.getRecipe()];
             this.inventory.input = [];
             this.progress.val=this.progress.max;

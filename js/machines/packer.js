@@ -2,7 +2,7 @@ function Packer(_pos,_flux,_lock){
     this.texture = {x: 320, y: 32, width: 128, height: 64};
     this.flux = _flux || screen.flux;
     this.lock = _lock;
-    console.log(_pos,_flux,_lock);
+    //console.log(_pos,_flux,_lock);
     Machine.call(this,_pos);
     this.inventory = new Inventory({
         input: [{x: 28, y: 8}]
@@ -37,7 +37,7 @@ Packer.prototype.update = function () {
         var min = Math.floor(sec/60);
         sec-=(min*60);
         this.used = false;
-        localStorage.score = ""+min+"min : "+sec+"sec";
+        localStorage.score = ""+min+"min:"+sec+"sec";
         screen = new MainScreen();
     }
 };

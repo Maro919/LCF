@@ -1,7 +1,7 @@
 function GameScreen() {
     console.log("Created a new GameScreen");
     
-    this.position = 0;
+    this.position = -149;
     this.steam = {max: 500, val: 0, reserved: 0};
     this.flux = {max: 500, val: 0, reserved: 0};
     this.hand = undefined;
@@ -55,7 +55,7 @@ GameScreen.prototype.display = function(){
 }
 GameScreen.prototype.onScroll = function(e){
     this.position+=e*50;
-    //this.position = Math.max(Math.min(50,this.position),-2100);
+    this.position = Math.max(Math.min(-149,this.position),-3554);
 }
 GameScreen.prototype.onClick = function(e){
     for (let i of this.buttons) if (e.x>=i.pos.x && e.x<=i.pos.x+i.width && e.y>=i.pos.y && e.y<=i.pos.y+i.height){i.onClick(e); return [this.buttons.indexOf(i),-1]}

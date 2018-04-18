@@ -5,7 +5,7 @@ function MainScreen() {
         input: [{x: 14+20/6, y: 16, preset: new ItemStack(new Item(80))},{x: 14+20/6, y: 30, preset: new ItemStack(new Item(82))}],
     },true));
     this.hand = undefined;
-    hiddenScreen = new Crafting();
+    hiddenScreen = new Crafting(true);
 }
 
 MainScreen.prototype.update = function(){
@@ -29,9 +29,9 @@ MainScreen.prototype.display = function(){
         ctx.save();
         ctx.drawImage(texture,0,192,64,64,20+18*scale,41*scale,64*scale/2,64*scale/2);
         ctx.textAlign = "center";
-        ctx.fillText("Gratulacje!",230, 300);
-        ctx.fillText("Twój wynik to: ",230,330);
-        ctx.fillText(localStorage.score,230,390);
+        ctx.fillText("Gratulacje!",20+34*scale, 300);
+        ctx.fillText("Twój wynik to: ",20+34*scale,330);
+        ctx.fillText(localStorage.score,20+34*scale,390);
         ctx.restore();
     }
     
@@ -60,9 +60,9 @@ MainScreen.prototype.onClick = function(e){
     for (var i in this.elements){
         e.x = Math.floor(e.x/scale);
         e.y = Math.floor(e.y/scale);
-        console.log(e);
+        //console.log(e);
         var tmp = this.elements[i].onClick(e);
-        console.log(tmp[0]);
+        //console.log(tmp[0]);
         switch(tmp[0]){
             case 0:
                 screen = new GameScreen();
