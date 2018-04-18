@@ -13,7 +13,7 @@ function StaticButton(_x,_y,_scale,_item,_texture,_func){
         case 2: this.item = new ItemStack(new StaticButton.machines[_item[1]]({x:0,y:0},StaticButton.dummyGauge),_item[2]); break;
     }
 }
-StaticButton.dummyGauge = {max: 0, val: 0, reserved: 0};
+StaticButton.dummyGauge = {max: 500, val: 500, reserved: 0};
 StaticButton.machines = [
     Assembler,
     Boiler,

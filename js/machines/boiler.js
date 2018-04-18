@@ -10,6 +10,9 @@ function Boiler(_pos){
     this.animation = {time: 0, frame: [0,0,0,0,0,0,0]};
 }
 Boiler.prototype = Object.create(Machine.prototype);
+Boiler.prototype.CraftingList = {
+  "15,":["Para"],
+};
 Boiler.prototype.display = function(){
     Machine.prototype.display.call(this);
     if (this.burn.val > 0){

@@ -9,6 +9,9 @@ function Charger(_pos){
     this.gauges = [new Gauge({x: 23.5, y: 27.5},this.progress),new Gauge({x: 8.5, y: 27.5},this.burn,true)];
 }
 Charger.prototype = Object.create(Machine.prototype);
+Charger.prototype.CraftingList = {
+  "14,":["Flux"],
+};
 Charger.prototype.update = function () {
     if(!this.proccesing){
         if(this.inventory.getRecipe()=="14," && this.burn.val+this.burn.reserved<=this.burn.max-(this.burn.max/(3/2))){

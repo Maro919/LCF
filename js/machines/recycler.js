@@ -8,6 +8,9 @@ function Recycler(_pos){
     this.gauges = [new Gauge({x: 23.5, y: 27.5},this.resource)];
 }
 Recycler.prototype = Object.create(Machine.prototype);
+Recycler.prototype.CraftingList = {
+    "12,": []
+};
 Recycler.prototype.update = function () {
     if (this.resource.val>0 && this.inventory.getRecipe()!=""){
         this.inventory.input = [];

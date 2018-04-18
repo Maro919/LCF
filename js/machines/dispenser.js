@@ -8,6 +8,9 @@ function Dispenser(_pos,_resource){
     this.gauges = [new Gauge({x: 23.5, y: 27.5},this.resource,true)];
 }
 Dispenser.prototype = Object.create(Machine.prototype);
+Dispenser.prototype.CraftingList = {
+    "": [12]
+}
 Dispenser.prototype.update = function () {
     if (this.resource.val>0 && !this.inventory.isBlocked()){
         this.inventory.output[0] = this.resource.res;
