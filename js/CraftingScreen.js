@@ -42,6 +42,12 @@ Crafting.prototype.update = function(){
     for (let i of Object.keys(this.info[0].CraftingList)[this.page].split(",")) if (i!="") this.info[0].inventory.input.push(new ItemStack(new Item(i)));
     this.info[0].inventory.output = [];
     for(let i of this.info[0].CraftingList[Object.keys(this.info[0].CraftingList)[this.page]]) this.info[0].inventory.output.push(new ItemStack(new Item(i)));
+    
+    if (this.page == 0) this.buttons[10].disabled = true;
+    else this.buttons[10].disabled = false;
+    
+    if (this.page == Object.keys(this.machine.CraftingList).length-1) this.buttons[11].disabled = true;
+    else this.buttons[11].disabled = false;
 }
 Crafting.prototype.desc = [
     "Dozownik",
@@ -90,20 +96,20 @@ Crafting.prototype.display = function(){
     ctx.restore();
     
     ctx.save();
-    ctx.translate(canvas.width/2+21*8.3,19*8.3);
-    ctx.drawImage(texture,160,192,80,64,-40*scale/2,32*scale/2,80*scale/2,64*scale/2);
-    ctx.restore();
-    
-    ctx.save();
     ctx.font = "30px VT323";
     ctx.textAlign = "center";
     ctx.fillText(this.desc[this.index],canvas.width/2+21*8.3, 14*8.3+20*scale/2);
     ctx.restore();
     
     ctx.save();
+    ctx.translate(canvas.width/2+21*8.3,19*8.3);
+    if (this.machine.inventory.input[0].item.name) ctx.drawImage(texture,160,192,80,64,-40*scale/2,32*scale/2,80*scale/2,64*scale/2);
+    ctx.restore();
+    
+    ctx.save();
     ctx.font = "25px VT323";
     ctx.textAlign = "center";
-    ctx.fillText("Składniki:",canvas.width/2+21*8.3, 19*8.3+40*scale/2);
+    if (this.machine.inventory.input[0].item.name) ctx.fillText("Składniki:",canvas.width/2+21*8.3, 19*8.3+40*scale/2);
     for (let i=0;i<this.machine.inventory.input.length;i++) if (this.machine.inventory.input[i].item.name) ctx.fillText(this.machine.inventory.input[i].item.name,canvas.width/2+21*8.3, 19*8.3+40*scale/2+(4*(i+1)*8.3));
     ctx.restore();
     

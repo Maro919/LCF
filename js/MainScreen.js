@@ -2,7 +2,7 @@ function MainScreen() {
     console.log("Created a new MainScreen");
     this.elements = [];
     this.elements.push(new Inventory({
-        input: [{x: 14+20/6, y: 16, preset: new ItemStack(new Item(80))},{x: 14+20/6, y: 30, preset: new ItemStack(new Item(82))}],
+        input: [{x: 14+20/6, y: 16, preset: new ItemStack(new Item(80))},{x: 14+20/6, y: 24, preset: new ItemStack(new Item(82))}],
     },true));
     this.hand = undefined;
     hiddenScreen = new Crafting(true);
@@ -23,7 +23,7 @@ MainScreen.prototype.display = function(){
     
     ctx.font = "30px VT323";
     ctx.fillText("Graj",170, 130);
-    ctx.fillText("Instrukcje",170, 215);
+    ctx.fillText("Instrukcje",170, 177);
         
     if (localStorage.score){
         ctx.save();
