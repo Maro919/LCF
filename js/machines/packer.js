@@ -1,6 +1,8 @@
-function Packer(_pos,_flux){
+function Packer(_pos,_flux,_lock){
     this.texture = {x: 320, y: 32, width: 128, height: 64};
     this.flux = _flux || screen.flux;
+    this.lock = _lock;
+    console.log(_pos,_flux,_lock);
     Machine.call(this,_pos);
     this.inventory = new Inventory({
         input: [{x: 28, y: 8}]
@@ -10,7 +12,7 @@ function Packer(_pos,_flux){
 }
 Packer.prototype = Object.create(Machine.prototype);
 Packer.prototype.CraftingList = {
-    "7,": [7]
+    "7,": ["Wygrana"]
 }
 Packer.prototype.update = function () {
     if(!this.proccesing && (this.flux.val-this.flux.reserved)>=100){
@@ -27,7 +29,8 @@ Packer.prototype.update = function () {
         this.flux.val-=(0.2);
         this.flux.reserved=Math.max(this.flux.reserved-0.2,0);
     }
-    if(this.progress.val<1 && this.proccesing){
+    if(this.progress.val<1 && this.proccesing && this.lock) this.progress.val=this.progress.max;
+    if(this.progress.val<1 && this.proccesing && !this.lock){
         this.proccesing=false;
         var tmp = (new Date().getTime()-screen.time);
         var sec = Math.floor(tmp/1000);

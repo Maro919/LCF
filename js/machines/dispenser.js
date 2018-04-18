@@ -4,12 +4,15 @@ function Dispenser(_pos,_resource){
     this.inventory = new Inventory({
         output: [{x: 12, y: 46}]
     });
-    this.resource = _resource || {max: 1, val: 1, res: new ItemStack(new Item(15))};
+    this.resource = _resource.res?_resource:{max: 0, val: 0, res: new ItemStack(new Item(13))};
     this.gauges = [new Gauge({x: 23.5, y: 27.5},this.resource,true)];
 }
 Dispenser.prototype = Object.create(Machine.prototype);
 Dispenser.prototype.CraftingList = {
-    "": [12]
+    "0,": [15],
+    "1,": [8],
+    "2,": [10],
+    "3,": [13]
 }
 Dispenser.prototype.update = function () {
     if (this.resource.val>0 && !this.inventory.isBlocked()){

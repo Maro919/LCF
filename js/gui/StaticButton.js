@@ -15,14 +15,14 @@ function StaticButton(_x,_y,_scale,_item,_texture,_func){
 }
 StaticButton.dummyGauge = {max: 500, val: 500, reserved: 0};
 StaticButton.machines = [
-    Assembler,
+    Dispenser,
     Boiler,
     Charger,
-    Crusher,
-    Dispenser,
-    Packer,
     Press,
-    Recycler
+    Crusher,
+    Assembler,
+    Recycler,
+    Packer
 ];
 StaticButton.prototype.display = function(){
     ctx.save();
