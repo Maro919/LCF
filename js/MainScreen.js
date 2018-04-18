@@ -2,7 +2,7 @@ function MainScreen() {
     console.log("Created a new MainScreen");
     this.elements = [];
     this.elements.push(new Inventory({
-        input: [{x: 14, y: 16, preset: new ItemStack(new Item(80))},{x: 14, y: 30, preset: new ItemStack(new Item(82))}],
+        input: [{x: 14+20/6, y: 16, preset: new ItemStack(new Item(80))},{x: 14+20/6, y: 30, preset: new ItemStack(new Item(82))}],
     },true));
     this.hand = undefined;
     hiddenScreen = new Crafting();
@@ -13,18 +13,25 @@ MainScreen.prototype.update = function(){
 MainScreen.prototype.display = function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(background,0,0,800,600);
-    ctx.drawImage(menu,50,50,700,500);
+    
+    ctx.save();
+    ctx.translate(canvas.width/2,canvas.height/2);
+    ctx.scale(8.3,8.3);
+    ctx.drawImage(menu,-40,-30);
+    ctx.restore();
+    
+    
     ctx.font = "30px VT323";
-    ctx.fillText("Graj",150, 130);
-    ctx.fillText("Instrukcje",150, 215);
+    ctx.fillText("Graj",170, 130);
+    ctx.fillText("Instrukcje",170, 215);
         
     if (localStorage.score){
         ctx.save();
-        ctx.drawImage(texture,0,192,64,64,18*scale,41*scale,64*scale/2,64*scale/2);
+        ctx.drawImage(texture,0,192,64,64,20+18*scale,41*scale,64*scale/2,64*scale/2);
         ctx.textAlign = "center";
-        ctx.fillText("Gratulacje!",210, 300);
-        ctx.fillText("Twój wynik to: ",210,330);
-        ctx.fillText(localStorage.score,210,390);
+        ctx.fillText("Gratulacje!",230, 300);
+        ctx.fillText("Twój wynik to: ",230,330);
+        ctx.fillText(localStorage.score,230,390);
         ctx.restore();
     }
     

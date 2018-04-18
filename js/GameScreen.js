@@ -7,12 +7,9 @@ function GameScreen() {
     this.hand = undefined;
     hiddenScreen = new Crafting();
     this.time = new Date().getTime();
-    this.pipes = [];
-    this.pipes.push()
     this.elements = [];
+    this.buttons = [new StaticButton(700, 488, 10, [1,82,13],{x: 96,y: 160,width: 8,height: 8,display: false},"tmpScreen = hiddenScreen; hiddenScreen = screen; screen = tmpScreen;")];
     this.elements.push(new Toolbar({x: 31,y: 480}));
-    this.elements.push(new StaticButton({x: 700,y: 488,width: 8,height: 8,scale: 10}, new ItemStack(new Item(82)),"tmpScreen = hiddenScreen; hiddenScreen = screen; screen = tmpScreen;"));
-    //new ItemStack(new Item(82))
     this.elements.push(new Crusher({x: 32*scale, y: 64},this.flux));
     this.elements.push(new Pipe({x: 96*scale,y: 64+(32*scale)}));
     this.elements.push(new Assembler({x: 112*scale,y: 64},this.flux));
@@ -42,6 +39,7 @@ GameScreen.prototype.display = function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(background,0,0,800,600);
     ctx.save();
+    for (let i=0;i<this.buttons.length;i++) this.buttons[i].display();
     ctx.translate(this.position,0);
     for(let e of this.elements) {
         e.display();
@@ -60,8 +58,8 @@ GameScreen.prototype.onScroll = function(e){
     //this.position = Math.max(Math.min(50,this.position),-2100);
 }
 GameScreen.prototype.onClick = function(e){
+    for (let i of this.buttons) if (e.x>=i.pos.x && e.x<=i.pos.x+i.width && e.y>=i.pos.y && e.y<=i.pos.y+i.height){i.onClick(e); return [this.buttons.indexOf(i),-1]}
     e.x-=this.position;
-    //console.log(e);
     for (var i in this.elements){
         if (e.x>=this.elements[i].pos.x && e.x<=this.elements[i].pos.x+(this.elements[i].texture.width*scale) && e.y>=this.elements[i].pos.y && e.y<=this.elements[i].pos.y+(this.elements[i].texture.height*scale)){
             e.x-=this.elements[i].pos.x;

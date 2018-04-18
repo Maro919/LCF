@@ -1,25 +1,44 @@
-function StaticButton(_param,_item,_func,_bg){
-    this.param = _param;
-    this.pos = {x: _param.x,y: _param.y};
+function StaticButton(_x,_y,_scale,_item,_texture,_func){
+    this.scale = _scale;
+    this.width = _texture.width*this.scale;
+    this.height = _texture.height*this.scale;
+    this.pos = {x: _x,y: _y};
+    this.texture = _texture;
     this.func = _func;
-    this.item = _item;
-    this.texture = {x: 0,y: 32, width: _param.width/scale*this.param.scale, height: _param.height/scale*this.param.scale};
-    this.bg = _bg;
-    
+    this.itemType = _item[0];
+    this.active = false;
+    switch(_item[0]){
+        case 0: this.item = undefined; break;
+        case 1: this.item = new ItemStack(new Item(_item[1]),_item[2]); break;
+        case 2: this.item = new ItemStack(new StaticButton.machines[_item[1]]({x:0,y:0},StaticButton.dummyGauge),_item[2]); break;
+    }
 }
+StaticButton.dummyGauge = {max: 0, val: 0, reserved: 0};
+StaticButton.machines = [
+    Assembler,
+    Boiler,
+    Charger,
+    Crusher,
+    Dispenser,
+    Packer,
+    Press,
+    Recycler
+];
 StaticButton.prototype.display = function(){
     ctx.save();
     ctx.translate(this.pos.x,this.pos.y);
-    //ctx.fillRect(0,0,this.param.size*this.param.scale,this.param.size*this.param.scale);
-    ctx.scale(1/scale,1/scale);
-    ctx.scale(this.param.scale,this.param.scale);
-    if (this.bg) ctx.drawImage(texture,this.bg.x,this.bg.y,this.bg.width,this.bg.height,0,0,this.texture.width*this.param.scale,this.texture.height*this.param.scale);
-    this.item.display();
+    if (this.texture.display) ctx.drawImage(texture,this.texture.x+(this.active&&this.texture.oX?this.texture.oX:0),this.texture.y+(this.active&&this.texture.oY?this.texture.oY:0),this.texture.width,this.texture.height,0,0,this.width,this.height);
+    if (this.item){
+        ctx.translate(this.texture.width/2*this.scale,this.texture.height/2*this.scale);
+        switch(this.itemType){
+            case 1: ctx.translate(-4*this.item.scale,-4*this.item.scale); break;
+            case 2: ctx.translate(-this.item.item.texture.width/2*this.item.scale,-this.item.item.texture.height/2*this.item.scale); break;
+        }
+        this.item.display();
+    }
     ctx.restore();
 }
-StaticButton.prototype.update = function(){
-    this.pos.x = this.param.x-screen.position;
-}
+StaticButton.prototype.update = function(){}
 StaticButton.prototype.onClick = function(e){
     console.log("Clicked");
     eval(this.func);

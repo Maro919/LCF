@@ -12,7 +12,8 @@ function Crusher(_pos,_flux){
 Crusher.prototype = Object.create(Machine.prototype);
 Crusher.prototype.CraftingList={
   "8,":[9,9,9],
-  "10,":[11,11,11]};
+  "10,":[11,11,11]
+};
 
 Crusher.prototype.update = function () {
     if(!this.proccesing && (this.flux.val-this.flux.reserved)>=100 && !this.inventory.isBlocked()){
