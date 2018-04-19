@@ -9,5 +9,5 @@ function Toolbar(_pos){
 Toolbar.prototype = Object.create(Machine.prototype);
 Toolbar.prototype.update = function(){
     //this.inventory.output[0] = screen.hand;
-    this.pos.x = 31-screen.position;
+    this.pos.x = ((canvas.width/2)-369)-screen.position;
 }

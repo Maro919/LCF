@@ -1,4 +1,4 @@
-function Recycler(_pos){
+function Recycler(_pos,_useless,_lock){
     this.texture = {x: 448, y: 32, width: 32, height: 64};
     Machine.call(this,_pos);
     this.inventory = new Inventory({
@@ -6,6 +6,7 @@ function Recycler(_pos){
     });
     this.resource = {max: 100, val: 100};
     this.gauges = [new Gauge({x: 23.5, y: 27.5},this.resource)];
+    this.locked = _lock;
 }
 Recycler.prototype = Object.create(Machine.prototype);
 Recycler.prototype.CraftingList = {
@@ -28,6 +29,7 @@ Recycler.prototype.CraftingList = {
 };
 Recycler.prototype.update = function () {
     if (this.resource.val>0 && this.inventory.getRecipe()!=""){
+        if (this.inventory.input[0].item.id == 7 && !this.locked) Item.prototype.names[7] = "Drogi Śmieć";
         this.inventory.input = [];
         this.resource.val--;
     }

@@ -15,6 +15,8 @@ var scale = 6;
 
 var hold = false;
 
+var experimental = false;
+
 function main(){
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
@@ -35,21 +37,24 @@ function main(){
 }
 
 function run() {
+    if (experimental) canvas.width = Math.max(window.innerWidth,800);
+    else canvas.width = 800;
+    ctx.imageSmoothingEnabled = false;
     screen.update();
     screen.display();
 }
 
 function initEventHandlers() {
     document.getElementById("canvas").onmousemove = function(e) {
-        let x = e.clientX-canvas.offsetLeft;
-        let y = e.clientY-canvas.offsetTop;
+        let x = e.pageX-canvas.offsetLeft;
+        let y = e.pageY-canvas.offsetTop;
         if (hold && e.buttons&1) screen.onScroll((x-mouse.x)/50);
         mouse.x = x;
         mouse.y = y;
         mouse.key = e.buttons;
     }
     document.getElementById("canvas").onmousedown = function(e){
-        let test = {x: e.clientX-e.target.offsetLeft, y: e.clientY-e.target.offsetTop};
+        let test = {x: e.pageX-e.target.offsetLeft, y: e.pageY-e.target.offsetTop};
         let res = [-1,-1];
         if (e.buttons && !hold) res = screen.onClick(test) || [-1,-1];
         hold = !(res[0]!= -1||res[1]!= -1);

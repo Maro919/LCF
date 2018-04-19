@@ -1,11 +1,25 @@
 body {
     text-align: center;
     background-color: #555;
+    margin: 0;
+    padding: 0;
 }
 canvas {
     background-color: #fff;
+    margin: 0;
+    padding: 0;
 }
 h1 {
     font-family: VT323;
     font-size: 40px;
+    display: block;
+}
+@media screen and (max-height: 715px) {
+    h1 {
+        display: none;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+    }
 }

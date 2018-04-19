@@ -7,8 +7,10 @@ function GameScreen() {
     this.hand = undefined;
     hiddenScreen = new Crafting();
     this.time = new Date().getTime();
+    
+    this.initButtons();
+    
     this.elements = [];
-    this.buttons = [new StaticButton(700, 488, 10, [1,82,13],{x: 96,y: 160,width: 8,height: 8,display: false},"tmpScreen = hiddenScreen; hiddenScreen = screen; screen = tmpScreen;")];
     this.elements.push(new Toolbar({x: 31,y: 480}));
     this.elements.push(new Crusher({x: 32*scale, y: 64},this.flux));
     this.elements.push(new Pipe({x: 96*scale,y: 64+(32*scale)}));
@@ -32,12 +34,18 @@ function GameScreen() {
     this.elements.push(new Packer({x: 592*scale,y: 64},this.flux));
 }
 
+GameScreen.prototype.initButtons = function(){
+    this.buttons = [new StaticButton(canvas.width/2+300, 488, 10, [1,82,13],{x: 96,y: 160,width: 8,height: 8,display: false},"tmpScreen = hiddenScreen; hiddenScreen = screen; screen = tmpScreen;")];
+}
+
 GameScreen.prototype.update = function(){
+    this.initButtons();
+    this.position = Math.max(Math.min(-149,this.position),canvas.width-4354);
     for (var i in this.elements) this.elements[i].update();
 }
 GameScreen.prototype.display = function(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(background,0,0,800,600);
+    for (let i=0;i<canvas.width/800;i++) ctx.drawImage(background,i*800,0,800,600);
     ctx.save();
     for (let i=0;i<this.buttons.length;i++) this.buttons[i].display();
     ctx.translate(this.position,0);
@@ -55,7 +63,6 @@ GameScreen.prototype.display = function(){
 }
 GameScreen.prototype.onScroll = function(e){
     this.position+=e*50;
-    this.position = Math.max(Math.min(-149,this.position),-3554);
 }
 GameScreen.prototype.onClick = function(e){
     for (let i of this.buttons) if (e.x>=i.pos.x && e.x<=i.pos.x+i.width && e.y>=i.pos.y && e.y<=i.pos.y+i.height){i.onClick(e); return [this.buttons.indexOf(i),-1]}

@@ -1,10 +1,27 @@
-function Crafting(_main) {
-    console.log("Created a new CraftingScreen"+(_main?" - disabled exit":""));
+function Crafting(_mode) {
+    console.log("Created a new CraftingScreen"+(_mode?" - disabled exit":""));
     this.position = 0;
+    
+    this.initButtons();
+    
+    this.mode = _mode;
+    
+    this.index = 0;
+    this.page = 0;
+    this.machine = new StaticButton.machines[this.index]({x:0,y:0},Object.create(StaticButton.dummyGauge),true);
+    
+    this.steam = {max: 500, val: 500, reserved: 0};
+    this.flux = {max: 500, val: 500, reserved: 0};
+    
+    this.hand = undefined;
+}
+
+Crafting.prototype.initButtons = function(){
     this.buttons = [];
     this.buttons.push(
         new StaticButton(canvas.width/2-47*8.3, canvas.height/2-21*8.3, 8.3, [1,84,4],{x: 96,y: 168,width: 8,height: 8,display: true},"tmpScreen = hiddenScreen; hiddenScreen = screen; screen = tmpScreen;"),
-        new StaticButton(canvas.width/2+39*8.3, canvas.height/2-21*8.3, 8.3, [1,81,4],{x: 104,y: 168,width: 8,height: 8,display: true},"hiddenScreen = screen; screen = new MainScreen();",_main),
+        new StaticButton(canvas.width/2+39*8.3, canvas.height/2-21*8.3, 8.3, [1,81,4],{x: 104,y: 168,width: 8,height: 8,display: true},"hiddenScreen = screen; screen = new MainScreen();",this.mode),
+        
         new StaticButton(canvas.width/2-47*8.3, canvas.height/2-12*8.3, 8.3, [2,0,4/6],{oY: -8,x: 96,y: 168,width: 8,height: 8,display: true},""),
         new StaticButton(canvas.width/2-47*8.3, canvas.height/2-3*8.3, 8.3, [2,1,4/6],{oY: -8,x: 96,y: 168,width: 8,height: 8,display: true},""),
         new StaticButton(canvas.width/2-47*8.3, canvas.height/2+6*8.3, 8.3, [2,2,4/6],{oY: -8,x: 96,y: 168,width: 8,height: 8,display: true},""),
@@ -17,18 +34,11 @@ function Crafting(_main) {
         new StaticButton(canvas.width/2-39*8.3, canvas.height/2+19*8.3, 8.3, [0,0],{x: 96,y: 176,width: 8,height: 8,display: true},""),
         new StaticButton(canvas.width/2+31*8.3, canvas.height/2+19*8.3, 8.3, [0,0],{x: 104,y: 176,width: 8,height: 8,display: true},"")
     );
-    
-    this.index = 0;
-    this.page = 0;
-    this.machine = new StaticButton.machines[this.index]({x:0,y:0},Object.create(StaticButton.dummyGauge),true);
-    
-    this.steam = {max: 500, val: 500, reserved: 0};
-    this.flux = {max: 500, val: 500, reserved: 0};
-    
-    this.hand = undefined;
 }
 
 Crafting.prototype.update = function(){
+    this.initButtons();
+    
     for (let i of this.buttons) i.active = false;
     this.buttons[this.index+2].active = true;
     this.info = [this.machine,this.desc[this.index]];
@@ -60,8 +70,13 @@ Crafting.prototype.desc = [
     "Paczkomat"
 ];
 Crafting.prototype.display = function(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(background,0,0,800,600);
+    hiddenScreen.display();
+    ctx.save();
+    ctx.fillStyle = "rgba(0,0,0,0.3)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.restore();
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //for (let i=0;i<canvas.width/800;i++) ctx.drawImage(background,i*800,0,800,600);
     
     //ctx.drawImage(menu,50,50,700,500);
     
